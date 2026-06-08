@@ -15,14 +15,14 @@ def test_package_imports() -> None:
     import clifford_fightnet
     from clifford_fightnet.config import load_config
     from clifford_fightnet.constants import BOXING_LABELS
-    from clifford_fightnet.utils import ensure_dir, get_project_root, set_deterministic_seed
+    from clifford_fightnet.utils import ensure_dir, get_project_root, set_seed
 
     assert clifford_fightnet.__version__ == "0.1.0"
     assert callable(load_config)
     assert isinstance(BOXING_LABELS, list)
     assert callable(get_project_root)
     assert callable(ensure_dir)
-    assert callable(set_deterministic_seed)
+    assert callable(set_seed)
 
 
 def test_default_config_loads() -> None:
@@ -51,3 +51,21 @@ def test_ensure_dir_creates_directory(tmp_path: Path) -> None:
     assert created_dir == target_dir
     assert created_dir.exists()
     assert created_dir.is_dir()
+
+
+def test_set_seed_repeats_numpy_and_torch_random_values() -> None:
+    import numpy as np
+    import torch
+
+    from clifford_fightnet.utils.reproducibility import set_seed
+
+    set_seed(42)
+    first_numpy = np.random.rand(4)
+    first_torch = torch.rand(4)
+
+    set_seed(42)
+    second_numpy = np.random.rand(4)
+    second_torch = torch.rand(4)
+
+    assert np.allclose(first_numpy, second_numpy)
+    assert torch.allclose(first_torch, second_torch)

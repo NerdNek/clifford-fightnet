@@ -6,7 +6,13 @@ import numpy as np
 import torch
 
 
-def set_deterministic_seed(seed: int) -> None:
+def set_seed(seed: int, deterministic: bool = True) -> None:
+    """Set global random seeds so ML experiments are easier to reproduce.
+
+    Reproducibility matters because it makes debugging, experiment comparison,
+    and result verification much more reliable across runs.
+    """
+
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -15,5 +21,9 @@ def set_deterministic_seed(seed: int) -> None:
         torch.cuda.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
 
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
+    if deterministic:
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+    else:
+        torch.backends.cudnn.deterministic = False
+        torch.backends.cudnn.benchmark = True
