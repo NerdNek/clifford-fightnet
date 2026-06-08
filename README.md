@@ -71,7 +71,11 @@ pip install -e .
 python scripts/download_dataset.py
 ```
 
-At the current stage, this script safely prepares the expected dataset directories and prints guidance rather than performing a full automated download.
+To download and copy the dataset into the repository's raw data directory:
+
+```bash
+python scripts/download_dataset.py --copy-to-project
+```
 
 ### 4. Inspect the dataset directory
 
