@@ -11,7 +11,7 @@ SRC_DIR = PROJECT_ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from clifford_fightnet.utils.paths import ensure_directory, get_repo_root
+from clifford_fightnet.utils.paths import ensure_dir, get_project_root
 
 
 LOGGER = logging.getLogger(__name__)
@@ -34,12 +34,12 @@ def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     args = parse_args()
 
-    repo_root = get_repo_root()
+    repo_root = get_project_root()
     raw_dir = args.destination or repo_root / "data" / "raw"
     processed_dir = repo_root / "data" / "processed"
 
-    ensure_directory(raw_dir)
-    ensure_directory(processed_dir)
+    ensure_dir(raw_dir)
+    ensure_dir(processed_dir)
 
     LOGGER.info("Prepared dataset directories.")
     LOGGER.info("Raw data directory: %s", raw_dir)
