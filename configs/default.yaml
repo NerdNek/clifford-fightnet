@@ -1,0 +1,37 @@
+project:
+  name: clifford-fightnet
+  seed: 42
+
+paths:
+  data_dir: data
+  raw_dir: data/raw
+  processed_dir: data/processed
+  outputs_dir: outputs
+
+data:
+  train_split: train
+  val_split: val
+  test_split: test
+  clip_length: 16
+  frame_stride: 2
+  image_size: 224
+  num_workers: 4
+
+model:
+  name: clifford_motion
+  num_classes: 4
+  input_channels: 3
+  feature_channels:
+    rgb: true
+    spatial_gradients: false
+    temporal_differences: false
+    bivector_motion: false
+
+training:
+  batch_size: 8
+  epochs: 10
+  learning_rate: 0.001
+  weight_decay: 0.0001
+
+logging:
+  level: INFO
