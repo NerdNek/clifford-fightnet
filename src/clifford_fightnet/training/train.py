@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 
 from clifford_fightnet.config import load_config
-from clifford_fightnet.data.dataset import BoxingClipsDataset
+from clifford_fightnet.data.dataset import BoxingVideoDataset
 from clifford_fightnet.utils.paths import ensure_dir, get_project_root
 from clifford_fightnet.utils.reproducibility import set_seed
 
@@ -26,9 +26,10 @@ def train(config_path: str | Path | None = None) -> None:
     ensure_dir(project_root / config["paths"]["outputs_dir"])
     set_seed(config["seed"])
 
-    dataset = BoxingClipsDataset(
+    dataset = BoxingVideoDataset(
         root_dir=processed_dir,
-        split="train",
+        num_frames=config["model"]["num_frames"],
+        image_size=config["model"]["image_size"],
     )
 
     if len(dataset) == 0:

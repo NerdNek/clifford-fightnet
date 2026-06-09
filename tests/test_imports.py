@@ -15,11 +15,13 @@ def test_package_imports() -> None:
     import clifford_fightnet
     from clifford_fightnet.config import load_config
     from clifford_fightnet.constants import BOXING_LABELS
+    from clifford_fightnet.data import BoxingVideoDataset
     from clifford_fightnet.utils import ensure_dir, get_project_root, set_seed
 
     assert clifford_fightnet.__version__ == "0.1.0"
     assert callable(load_config)
     assert isinstance(BOXING_LABELS, list)
+    assert BoxingVideoDataset is not None
     assert callable(get_project_root)
     assert callable(ensure_dir)
     assert callable(set_seed)

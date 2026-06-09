@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 
 from clifford_fightnet.config import load_config
-from clifford_fightnet.data.dataset import BoxingClipsDataset
+from clifford_fightnet.data.dataset import BoxingVideoDataset
 from clifford_fightnet.utils.paths import get_project_root
 
 
@@ -22,9 +22,10 @@ def evaluate(config_path: str | Path | None = None) -> None:
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
     )
 
-    dataset = BoxingClipsDataset(
+    dataset = BoxingVideoDataset(
         root_dir=processed_dir,
-        split="test",
+        num_frames=config["model"]["num_frames"],
+        image_size=config["model"]["image_size"],
     )
 
     if len(dataset) == 0:
